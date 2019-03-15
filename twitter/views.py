@@ -36,3 +36,10 @@ class ComposeView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+class TweetDetailView(View):
+
+    def get(self, request, pk):
+        tweet = models.Tweet.objects.get(pk=pk)
+        return render(request, 'twitter/tweet_detail.html', {'tweet': tweet})

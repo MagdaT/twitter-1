@@ -8,4 +8,6 @@ urlpatterns = [
     path('register/', views.RegisterView.as_view(), name='register'),
     path('profile/', views.ProfileView.as_view(), name='profile'),
     path('compose/', views.ComposeView.as_view(), name='compose'),
+    path('tweet/<int:pk>/', views.TweetDetailView.as_view(),
+         name='tweet-detail'),
 ]

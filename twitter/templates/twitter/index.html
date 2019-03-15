@@ -4,7 +4,10 @@
         <article class="media content-section">
             <div class="media-body">
                 <div class="article-metadata">
-                    <small class="text-muted">{{ tweet.creation_date|date:"F d, Y" }}</small>
+                    <a href="{% url 'twitter:tweet-detail' tweet.pk %}">
+                        <small class="text-muted">{{ tweet.creation_date|date:"F d, Y" }}</small>
+                    </a>
+                    <small class="text-muted">by {{ tweet.author }}</small>
                 </div>
                 <p class="article-content">{{ tweet.content }}</p>
             </div>

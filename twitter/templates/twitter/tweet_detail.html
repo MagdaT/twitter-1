@@ -1,0 +1,12 @@
+{% extends 'twitter/base.html' %}
+{% block content %}
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <small class="text-muted">{{ tweet.author }}</small>
+                <small class="text-muted">{{ tweet.creation_date|date:"F d, Y" }}</small>
+            </div>
+            <p class="article-content">{{ tweet.content }}</p>
+        </div>
+    </article>
+{% endblock content %}
