@@ -10,4 +10,6 @@ urlpatterns = [
     path('compose/', views.ComposeView.as_view(), name='compose'),
     path('tweet/<int:pk>/', views.TweetDetailView.as_view(),
          name='tweet-detail'),
+    path('user/<int:pk>/', views.AuthorDetailView.as_view(),
+         name='author-detail'),
 ]

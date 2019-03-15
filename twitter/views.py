@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView
+from django.contrib.auth.models import User
 
 from twitter import models
 from twitter import forms
@@ -43,3 +44,13 @@ class TweetDetailView(View):
     def get(self, request, pk):
         tweet = models.Tweet.objects.get(pk=pk)
         return render(request, 'twitter/tweet_detail.html', {'tweet': tweet})
+
+
+class AuthorDetailView(View):
+
+    def get(self, request, pk):
+        author = User.objects.get(pk=pk)
+        tweets = models.Tweet.objects.filter(
+            author=author).order_by('-creation_date')
+        return render(request, 'twitter/user_detail.html',
+                      {'tweets': tweets, 'author': author})
