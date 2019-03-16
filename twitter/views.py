@@ -58,8 +58,21 @@ class TweetDetailView(View):
 
     def get(self, request, pk):
         tweet = models.Tweet.objects.get(pk=pk)
-        return render(request, 'twitter/tweet_detail.html', {'tweet': tweet})
+        add_comment = forms.AddCommentForm()
+        return render(request, 'twitter/tweet_detail.html',
+                      {'tweet': tweet, 'add_comment': add_comment})
 
+    def post(self, request, pk):
+        form = forms.AddCommentForm(request.POST)
+        tweet = models.Tweet.objects.get(pk=pk)
+        if form.is_valid():
+            content = form.cleaned_data.get('content')
+            new_comment = models.Comment(
+                content=content, author=request.user, tweet=tweet)
+            new_comment.save()
+            form = forms.AddCommentForm()
+        return render(request, 'twitter/tweet_detail.html',
+                      {'tweet': tweet, 'add_comment': form})
 
 class AuthorDetailView(View):
 

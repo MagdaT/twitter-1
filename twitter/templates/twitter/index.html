@@ -12,6 +12,15 @@
                     </a>
                 </div>
                 <p class="article-content">{{ tweet.content }}</p>
+                <div>
+                    {% if tweet.comment_set.all %}
+                        <small class="text-muted">Comments: ({{ tweet.comment_set.all.count }})</small><br>
+                        {% for comment in tweet.comment_set.all %}
+                            <small class="text-muted">{{ comment.author.username }}: </small>
+                            {{ comment.content|truncatechars:25 }}<br>
+                        {% endfor %}
+                    {% endif %}
+                </div>
             </div>
         </article>
     {% endfor %}
