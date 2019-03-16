@@ -10,5 +10,6 @@ class Tweet(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'[{self.creation_date}] ' \
-               f'TWEET by {self.author}: {self.content[:20]}'
+        return '[{}] TWEET by {}: {}'.format(
+            self.creation_date,
+            self.author, self.content[:20])
