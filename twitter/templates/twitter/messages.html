@@ -1,0 +1,47 @@
+{% extends 'twitter/base.html' %}
+{% block content %}
+    <h1>Messages</h1>
+        <a class="btn btn-outline-info" href="{% url 'twitter:compose-message' %}">New message</a>
+        <p></p>
+    {% block messages %}
+        <h2>Received messages</h2>
+        {% if received %}
+            {% for message in received %}
+                <article class="media content-section">
+                    <div class="media-body">
+                        <div class="article-metadata">
+                            From: <a class="mr-2">{{ message.sender }}</a>
+                            <small class="text-muted">{{ message.date_send|date:"F d, Y" }}</small>
+                        </div>
+                            <div class="article-metadata"><b>{{ message.title }}</b></div>
+                            <p class="article-content">{{ message.content }}</p>
+                    </div>
+                </article>
+            {% endfor %}
+        {% else %}
+            <p>Your mailbox is empty</p>
+        {% endif %}
+        <h2>Sent messages</h2>
+        {% if sent %}
+            {% for message in sent %}
+                <article class="media content-section">
+                    <div class="media-body">
+                        <div class="article-metadata">
+                            To: <a class="mr-2">{{ message.recipient }}</a>
+                            <small class="text-muted">{{ message.date_send|date:"F d, Y" }}</small>
+                        </div>
+                            <div class="article-metadata"><b>{{ message.title }}</b></div>
+                            <p class="article-content">{{ message.content }}</p>
+                    </div>
+                </article>
+            {% endfor %}
+        {% else %}
+            <p>No messages sent.
+                <a href="{% url 'twitter:compose-message' %}">Send a new message</a>
+            </p>
+        {% endif %}
+    {% endblock messages %}
+{% endblock content %}
+
+
+

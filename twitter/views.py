@@ -74,6 +74,7 @@ class TweetDetailView(View):
         return render(request, 'twitter/tweet_detail.html',
                       {'tweet': tweet, 'add_comment': form})
 
+
 class AuthorDetailView(View):
 
     def get(self, request, pk):
@@ -82,3 +83,23 @@ class AuthorDetailView(View):
             author=author).order_by('-creation_date')
         return render(request, 'twitter/user_detail.html',
                       {'tweets': tweets, 'author': author})
+
+
+class MessageListView(LoginRequiredMixin, View):
+    def get(self, request):
+        received = models.Message.objects.filter(
+            recipient=request.user, blocked=False).order_by('-date_send')
+        sent = models.Message.objects.filter(
+            sender=request.user, blocked=False).order_by('-date_send')
+        return render(request, 'twitter/messages.html',
+                      {'received': received, 'sent': sent})
+
+
+class ComposeMessageView(LoginRequiredMixin, CreateView):
+    model = models.Message
+    form_class = forms.MessageForm
+    success_url = reverse_lazy('twitter:messages')
+
+    def form_valid(self, form):
+        form.instance.sender = self.request.user
+        return super().form_valid(form)
