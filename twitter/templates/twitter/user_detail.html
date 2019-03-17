@@ -1,6 +1,7 @@
 {% extends 'twitter/base.html' %}
+{% load avatar_tags %}
 {% block content %}
-<h2>Tweets by {{ author.get_username }}</h2>
+<h2>Tweets by {% avatar author 25 class="rounded-circle" id="user_avatar" %} {{ author.get_username }}</h2>
     {% for tweet in tweets %}
         <article class="media content-section">
             <div class="media-body">
