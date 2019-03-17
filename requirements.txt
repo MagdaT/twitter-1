@@ -1,5 +1,9 @@
 Django==2.1.7
+django-appconf==1.0.3
+django-avatar==4.1.0
+django-crispy-forms==1.7.2
 Faker==1.0.4
+Pillow==5.4.1
 python-dateutil==2.8.0
 pytz==2018.9
 six==1.12.0
