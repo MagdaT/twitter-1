@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView
 from django.contrib.auth.models import User
+from django.db.models import Q
+
 
 from twitter import models
 from twitter import forms
@@ -103,3 +105,16 @@ class ComposeMessageView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.sender = self.request.user
         return super().form_valid(form)
+
+
+class MessageDetailView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        query_set = models.Message.objects.filter(
+            blocked=False).filter(
+            Q(recipient=request.user) | Q(sender=request.user))
+        msg = get_object_or_404(query_set, pk=pk)
+        if msg.recipient.pk == request.user.pk:
+            msg.read = True
+            msg.save()
+        return render(request, 'twitter/message_detail.html',
+                      {'msg': msg})

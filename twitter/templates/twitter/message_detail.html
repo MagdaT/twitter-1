@@ -1,0 +1,15 @@
+{% extends 'twitter/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                FROM: <small class="text-muted">{{ msg.sender }}</small>
+                TO: <small class="text-muted">{{ msg.recipient }}</small>
+                <small class="text-muted">{{ msg.date_send|date:"F d, Y" }}</small>
+            </div>
+            <h2 class="article-title">{{ msg.title }}</h2>
+            <p class="article-content">{{ msg.content }}</p>
+        </div>
+    </article>
+{% endblock content %}

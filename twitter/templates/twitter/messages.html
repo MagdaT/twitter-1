@@ -13,8 +13,13 @@
                             From: <a class="mr-2">{{ message.sender }}</a>
                             <small class="text-muted">{{ message.date_send|date:"F d, Y" }}</small>
                         </div>
-                            <div class="article-metadata"><b>{{ message.title }}</b></div>
-                            <p class="article-content">{{ message.content }}</p>
+                            <div class="article-metadata">
+                                {% if not message.read %}
+                                    <b><a href="{% url 'twitter:message-detail' message.pk %}">{{ message.title }}</a></b>
+                                {% else %}
+                                    <a href="{% url 'twitter:message-detail' message.pk %}">{{ message.title }}</a>
+                                {% endif %}
+                            </div>
                     </div>
                 </article>
             {% endfor %}
@@ -30,8 +35,9 @@
                             To: <a class="mr-2">{{ message.recipient }}</a>
                             <small class="text-muted">{{ message.date_send|date:"F d, Y" }}</small>
                         </div>
-                            <div class="article-metadata"><b>{{ message.title }}</b></div>
-                            <p class="article-content">{{ message.content }}</p>
+                            <div class="article-metadata">
+                                <a href="{% url 'twitter:message-detail' message.pk %}">{{ message.title }}</a>
+                            </div>
                     </div>
                 </article>
             {% endfor %}
